@@ -1,0 +1,17 @@
+EMAIL = "user@example.com"
+SERVERS = [
+    {
+        "domain": "sub.domain.com",
+        "locations": [
+            {"path": "/path", "dest": "http://127.0.0.1:8443"},
+            {"path": "/pathtwo", "dest": "http://127.0.0.1:9191"}
+        ]
+    },
+    {
+        "domain": "other-domain-two.net",
+        "locations": [
+            {"path": "/some", "dest": "http://127.0.0.1:7000"},
+            {"path": "/other", "dest": "http://127.0.0.1:6000"}
+        ]
+    }
+]
