@@ -2,6 +2,7 @@ import os
 import argparse
 from nginx_config import SERVERS, EMAIL
 
+
 DRY_RUN = False
 SITES_ENABLED = '/etc/nginx/sites-enabled'
 LOCATION_PLACEHOLDER = '#LOCATION_PLACEHOLDER'

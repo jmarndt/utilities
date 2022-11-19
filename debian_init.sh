@@ -9,5 +9,3 @@ ufw default deny incoming
 ufw allow 22
 
 sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-
-reboot
