@@ -2,6 +2,7 @@
     "proxies": [
         {
             "domain": "domain1.com",
+            "https_only": true,
             "locations": [
                 {
                     "path": "/some_path",
@@ -15,6 +16,7 @@
         },
         {
             "domain": "sub.domain2.com",
+            "https_only": true,
             "locations": [
                 {
                     "path": "/",

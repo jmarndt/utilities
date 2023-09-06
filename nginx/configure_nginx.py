@@ -28,8 +28,9 @@ def nginx_proxy_builder(proxy):
   proxy_template = 'server {\n  server_name DOMAIN_PLACEHOLDER;\n\nLOCATION_PLACEHOLDER\n}'
   location_template = '  location PATH_PLACEHOLDER {\n    proxy_pass DESTINATION_PLACEHOLDER;\n    HEADER_PLACEHOLDER\n  }\n\nLOCATION_PLACEHOLDER'
   domain = proxy['domain']
+  https_only = proxy['https_only']
   file_path = f'/etc/nginx/sites-enabled/{domain}'
-  certbot_cmd = build_certbot_command(domain)
+  certbot_cmd = build_certbot_command(domain, https_only)
   proxy_config = proxy_template.replace('DOMAIN_PLACEHOLDER', domain)
   for location in proxy['locations']:
       location_config = location_template.replace('PATH_PLACEHOLDER', location['path']).replace('DESTINATION_PLACEHOLDER', location['destination']).replace('HEADER_PLACEHOLDER', '\n    '.join(location['headers']))
@@ -38,9 +39,10 @@ def nginx_proxy_builder(proxy):
   return { 'domain': domain, 'nginx_conf': proxy_config, 'file_path': file_path, 'certbot_cmd': certbot_cmd }
 
 
-def build_certbot_command(domain):
+def build_certbot_command(domain, https_only):
   email_flag = f'--email {args.email}' if args.email else '--register-unsafely-without-email'
-  certbot_cmd = f'certbot run --nginx --non-interactive --agree-tos --no-eff-email --no-redirect {email_flag} --domain {domain}'
+  redirect_flag = '--redirect' if https_only else '--no-redirect'
+  certbot_cmd = f'certbot run --nginx --non-interactive --agree-tos --no-eff-email {redirect_flag} {email_flag} --domain {domain}'
   return certbot_cmd
 
 
