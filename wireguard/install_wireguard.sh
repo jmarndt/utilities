@@ -1,7 +1,6 @@
 #!/bin/sh
 
-apt update && apt install -y ufw wireguard
-ufw allow 51820
+apt update && apt install -y wireguard
 modprobe wireguard
 echo wireguard | tee /etc/modules-load.d/wireguard.conf
 systemctl restart systemd-modules-load
