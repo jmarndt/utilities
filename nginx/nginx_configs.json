@@ -3,15 +3,34 @@
         {
             "domain": "domain1.com",
             "locations": [
-                { "path": "/some_path", "destination": "http://127.0.0.1:7000" }
+                {
+                    "path": "/some_path",
+                    "destination": "http://127.0.0.1:7000",
+                    "headers": [
+                        "proxy_set_header Upgrade $http_upgrade;",
+                        "proxy_set_header Connection \"upgrade\";"
+                    ]
+                }
             ]
         },
         {
             "domain": "sub.domain2.com",
             "locations": [
-                { "path": "/", "destination": "http://127.0.0.1:8181" },
-                { "path": "/path_one", "destination": "http://127.0.0.1:8443" },
-                { "path": "/path_two", "destination": "http://127.0.0.1:9191" }
+                {
+                    "path": "/",
+                    "destination": "http://127.0.0.1:8181",
+                    "headers": []
+                },
+                {
+                    "path": "/path_one",
+                    "destination": "http://127.0.0.1:8443",
+                    "headers": []
+                },
+                {
+                    "path": "/path_two",
+                    "destination": "http://127.0.0.1:9191",
+                    "headers": []
+                }
             ]
         }
     ]

@@ -26,13 +26,13 @@ def build():
 
 def nginx_proxy_builder(proxy):
   proxy_template = 'server {\n  server_name DOMAIN_PLACEHOLDER;\n\nLOCATION_PLACEHOLDER\n}'
-  location_template = '  location PATH_PLACEHOLDER {\n    proxy_pass DESTINATION_PLACEHOLDER;\n  }\n\nLOCATION_PLACEHOLDER'
+  location_template = '  location PATH_PLACEHOLDER {\n    proxy_pass DESTINATION_PLACEHOLDER;\n    HEADER_PLACEHOLDER\n  }\n\nLOCATION_PLACEHOLDER'
   domain = proxy['domain']
   file_path = f'/etc/nginx/sites-enabled/{domain}'
   certbot_cmd = build_certbot_command(domain)
   proxy_config = proxy_template.replace('DOMAIN_PLACEHOLDER', domain)
   for location in proxy['locations']:
-      location_config = location_template.replace('PATH_PLACEHOLDER', location['path']).replace('DESTINATION_PLACEHOLDER', location['destination'])
+      location_config = location_template.replace('PATH_PLACEHOLDER', location['path']).replace('DESTINATION_PLACEHOLDER', location['destination']).replace('HEADER_PLACEHOLDER', '\n    '.join(location['headers']))
       proxy_config = proxy_config.replace('LOCATION_PLACEHOLDER', location_config)
   proxy_config = proxy_config.replace('\n\nLOCATION_PLACEHOLDER', '')
   return { 'domain': domain, 'nginx_conf': proxy_config, 'file_path': file_path, 'certbot_cmd': certbot_cmd }
