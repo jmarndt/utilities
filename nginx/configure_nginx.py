@@ -53,5 +53,4 @@ if __name__ == '__main__':
     for config in nginx_configs:
       with open(config["file_path"], 'w') as nginx_conf:
         nginx_conf.write(config["nginx_conf"])
-      # run certbot command...
       os.system(config["certbot_cmd"])
