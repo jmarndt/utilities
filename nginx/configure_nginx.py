@@ -50,5 +50,5 @@ if __name__ == '__main__':
       print(f'NGINX config for {config["domain"]}:\n{config["nginx_conf"]}\nCertBot command: {config["certbot_cmd"]}\n')
   else:
     for config in nginx_configs:
-      with open(f'temp.{config["domain"]}', 'w') as nginx_conf:
+      with open(config["domain"], 'w') as nginx_conf:
         nginx_conf.write(config["nginx_conf"])
