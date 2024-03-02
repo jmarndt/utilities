@@ -5,6 +5,7 @@ WG=false
 WEB=false
 PYTHON=false
 DOCKER=false
+KUBERO=false
 COOLIFY=false
 
 for opt in "$@"
@@ -14,6 +15,7 @@ do
         web) WEB=true;;
         python) PYTHON=true;;
         docker) DOCKER=true;;
+        kubero) KUBERO=true;;
         coolify) COOLIFY=true;;
     esac
 done
@@ -41,6 +43,12 @@ fi
 if $DOCKER; then
     curl -sSL https://get.docker.com | bash
     usermod -aG docker $(whoami)
+fi
+
+if $KUBERO; then
+    ufw allow 80
+    ufw allow 443
+    curl -fsSL get.kubero.dev | bash
 fi
 
 if $COOLIFY; then
