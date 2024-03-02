@@ -23,7 +23,7 @@ done
 apt install -y vim git curl ufw gnupg tree
 ufw default deny incoming
 ufw allow 22
-ufw enable
+ufw --force enable
 sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 
 if $WG; then
