@@ -20,7 +20,7 @@ do
     esac
 done
 
-apt install -y vim git curl ufw gnupg tree
+apt install -y vim git curl wget ufw gnupg tree jc jid jello jq jqp fq xq yq
 ufw default deny incoming
 ufw allow 22
 ufw --force enable
@@ -57,5 +57,3 @@ if $COOLIFY; then
     ufw allow 8000
     curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash
 fi
-
-reboot
