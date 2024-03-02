@@ -1,0 +1,53 @@
+#!/bin/sh
+# curl -fsSL https://raw.githubusercontent.com/jmarndt/utilities/master/init/debian.sh | bash -s -- wg python ... etc
+
+WG=false
+WEB=false
+PYTHON=false
+DOCKER=false
+COOLIFY=false
+
+for opt in "$@"
+do
+    case "${opt}" in
+        wg) WG=true;;
+        web) WEB=true;;
+        python) PYTHON=true;;
+        docker) DOCKER=true;;
+        coolify) COOLIFY=true;;
+    esac
+done
+
+apt install -y vim git curl ufw gnupg tree
+ufw default deny incoming
+ufw allow 22
+ufw enable
+sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+
+if $WG; then
+    apt install -y wireguard
+    ufw allow 51820
+fi
+
+if $WEB; then
+    ufw allow 80
+    ufw allow 443
+fi
+
+if $PYTHON; then
+    apt install -y python3 python3-pip python3-venv
+fi
+
+if $DOCKER; then
+    curl -sSL https://get.docker.com | bash
+    usermod -aG docker $(whoami)
+fi
+
+if $COOLIFY; then
+    ufw allow 80
+    ufw allow 443
+    ufw allow 8000
+    curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash
+fi
+
+reboot
